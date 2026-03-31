@@ -1,0 +1,32 @@
+[package]
+name = "android-demo"
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+description = "Android demo app: IOTA PTB viewer built with Freya GUI and iota-sdk"
+
+[dependencies]
+freya = { git = "https://github.com/marc2332/freya", rev = "48a80f73", features = ["performance"] }
+freya-winit = { git = "https://github.com/marc2332/freya", rev = "48a80f73" }
+iota-sdk = { workspace = true, features = ["graphql", "types", "hash", "serde"] }
+serde_json = { workspace = true }
+base64ct = { workspace = true, features = ["std"] }
+bcs = { workspace = true }
+chrono = "0.4"
+tokio = { workspace = true, features = ["macros", "rt-multi-thread", "time"] }
+env_logger = "0.11"
+log = "0.4"
+
+[target.'cfg(target_os = "android")'.dependencies]
+android_logger = "0.15.1"
+winit = { version = "0.30.12", features = ["android-game-activity", "rwh_06"] }
+jni = "0.19.0"
+
+[lib]
+path = "src/lib.rs"
+name = "iota_ptb_viewer"
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+path = "src/main.rs"
+name = "iota-ptb-viewer-desktop"
